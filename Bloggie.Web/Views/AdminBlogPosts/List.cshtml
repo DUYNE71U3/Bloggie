@@ -1,0 +1,50 @@
+﻿@model List<Bloggie.Web.Models.Domain.BlogPost>
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>Add New Blog Post</h1>
+    </div>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="container py-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Heading</th>
+                    <th>Tags</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var blogPost in Model)
+                {
+                    <tr>
+                        <td>@blogPost.Id</td>
+                        <td>@blogPost.Heading</td>
+                        <td>
+                            <div class="d-flex">
+                                @foreach (var tag in blogPost.Tags)
+                                {
+                                    <span class="badge bg-secondary me-2">@tag.Name</span>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <a asp-area="" asp-controller="AdminBlogPosts" asp-action="Edit" asp-route-id="@blogPost.Id"
+                               class="btn btn-dark">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1>Not found</h1>
+    </div>
+}
