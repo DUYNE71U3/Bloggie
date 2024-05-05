@@ -26,22 +26,26 @@ namespace Bloggie.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
-            var identityUser = new IdentityUser
+            if (ModelState.IsValid)
             {
-                UserName = registerViewModel.Username,
-                Email = registerViewModel.Email,
-            };
-
-            var identityResult = await _userManager.CreateAsync(identityUser, registerViewModel.Password);
-            if(identityResult.Succeeded)
-            {
-                //Give instance "User" for who register
-                var roleIdentityResult = await _userManager.AddToRoleAsync(identityUser, "User");
-                if(roleIdentityResult.Succeeded)
+                var identityUser = new IdentityUser
                 {
-                    return RedirectToAction("Register");
+                    UserName = registerViewModel.Username,
+                    Email = registerViewModel.Email,
+                };
+
+                var identityResult = await _userManager.CreateAsync(identityUser, registerViewModel.Password);
+                if (identityResult.Succeeded)
+                {
+                    //Give instance "User" for who register
+                    var roleIdentityResult = await _userManager.AddToRoleAsync(identityUser, "User");
+                    if (roleIdentityResult.Succeeded)
+                    {
+                        return RedirectToAction("Login","Account");
+                    }
                 }
             }
+            
             return View();
         }
         
@@ -58,6 +62,11 @@ namespace Bloggie.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
             var signInResult = await _signInManager.PasswordSignInAsync(loginViewModel.Username,
                 loginViewModel.Password, false, false);
 

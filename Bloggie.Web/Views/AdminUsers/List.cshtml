@@ -10,6 +10,13 @@
 
 <div>
     <div class="container py-5">
+
+        <div class="mb-3 d-flex justify-content-end">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Create User
+            </button>
+        </div>
+
         @if (Model.Users is not null || Model.Users.Any())
         {
             <table class="table">
@@ -18,6 +25,7 @@
                         <th>Id</th>
                         <th>UserName</th>
                         <th>Email</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +35,14 @@
                             <td>@user.Id</td>
                             <td>@user.UserName</td>
                             <td>@user.EmailAddress</td>
+                            <td>
+                                <form method="post"
+                                      asp-controller="AdminUsers"
+                                      asp-action="Delete"
+                                      asp-route-id="@user.Id">
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -34,10 +50,62 @@
         }
         else
         {
-            <div class= "text-center">
+            <div class="text-center">
                 <h1>Not users found</h1>
             </div>
-            
+
         }
     </div>
 </div>
+
+<form method="post">
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create new model</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label class="form-label">UserName</label>
+                        <input type="text" class="form-control" asp-for="Username" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="text" class="form-control" asp-for="Email" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" asp-for="Password" />
+
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input type="checkbox" id="chkUserRole" class="form-check-input" value="User" checked disabled />
+                            <label class="form-check-label" for="chkUserRole">User Role</label>
+                        </div>
+
+                        @if (User.IsInRole("SuperAdmin"))
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" id="chkAdminRole" class="form-check-input" asp-for="AdminRoleCheckbox" />
+                                <label class="form-check-label" for="chkAdminRole">Admin Role</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

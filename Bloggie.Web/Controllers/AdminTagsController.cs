@@ -25,6 +25,11 @@ namespace Bloggie.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddTagRequest addTagRequest)
         {
+            if (ModelState.IsValid == false)
+            {
+                return View();
+            }
+
             var tag = new Tag
             {
                 Name = addTagRequest.Name,

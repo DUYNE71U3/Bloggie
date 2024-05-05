@@ -24,13 +24,15 @@
                                     <form method="post">
 
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="username" type="email" placeholder="username" asp-for="Username" />
+                                            <input class="form-control" id="username" type="text" placeholder="username" asp-for="Username" required />
                                             <label for="inputUsername">Username</label>
+                                            <span class="text-danger" asp-validation-for="Username"></span>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="password" type="password" placeholder="Password" asp-for="Password" />
+                                            <input class="form-control" id="password" type="password" placeholder="Password" asp-for="Password" required minlength="6" />
                                             <label for="inputPassword">Password</label>
+                                            <span class="text-danger" asp-validation-for="Password"></span>
                                         </div>                       
                                         
                                         <div class="form-floatin mb-3">

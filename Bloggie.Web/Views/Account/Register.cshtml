@@ -24,19 +24,22 @@
                                     <form method="post">
 
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="username" placeholder="Username" />
+                                            <input class="form-control" id="username" placeholder="Username" asp-for="Username" required />
                                             <label for="inputUsername">Username</label>
+                                            <span class="text-danger" asp-validation-for="Username"></span>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="email" type="email" placeholder="name@example.com" />
+                                            <input class="form-control" id="email" type="email" placeholder="name@example.com" asp-for="Email" required />
                                             <label for="inputEmail">Email</label>
+                                            <span class="text-danger" asp-validation-for="Email"></span>
                                         </div>
 
                                         <div class="form-floating mb-3">
                                             <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="password" type="password" placeholder="Create a password" />
+                                                <input class="form-control" id="password" type="password" placeholder="Create a password" asp-for="Password" required minlenght="6" />
                                                 <label for="inputPassword">Password</label>
+                                                <span class="text-danger" asp-validation-for="Password"></span>
                                             </div>
                                         </div>
 
