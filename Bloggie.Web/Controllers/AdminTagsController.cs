@@ -41,9 +41,12 @@ namespace Bloggie.Web.Controllers
             return RedirectToAction("List");
         }
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(string? searchQuery)
         {
-            var tags = await _tagRepository.GetAllAsync();
+            //for view search bar
+            ViewBag.SearchQuery = searchQuery;
+
+            var tags = await _tagRepository.GetAllAsync(searchQuery);
             return View(tags);
         }
         [HttpGet]
