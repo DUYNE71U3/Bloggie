@@ -4,7 +4,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container col-xxl-8 px-4 py-5 ">
+<div class="container col-xxl-8 px-4 py-5">
     <div class="row align-items-center g-5 py-5">
         <div class="col-12 col-lg-6">
             <h1 class="display-5 fw-bold lh-1 mb-3">
@@ -28,7 +28,7 @@
 </div>
 
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="justify-content-center">
         <div class="col-6 d-flex">
             @if (Model != null && Model.Tags.Any())
             {
@@ -42,43 +42,33 @@
 </div>
 
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-6">
-            @if (Model != null && Model.BlogPosts.Any())
+<div class="container mt-3 mb-5">
+    <div class="row">
+        @if (Model != null && Model.BlogPosts.Any())
+        {
+            foreach (var blogPost in Model.BlogPosts)
             {
-                foreach (var blogPost in Model.BlogPosts)
-                {
-                    <div class="mb-5 bg-light box-shadow py-5">
-                        <img src="@blogPost.FeaturedImageUrl" alt="@blogPost.Heading"
-                             class="mb-2 d-block img-fluid" />
-                        <h2 class="mb-4">@blogPost.Heading</h2>
-                        <p class="mb-2">
-                            Author: @blogPost.Author
-                            <hr />
-                            Publish Date: @blogPost.PublishedDate.ToShortDateString()
-                        </p>
-
-                        <p class="mb-4">
-                            @foreach (var tag in blogPost.Tags)
-                            {
-                                <span class="badge bg-secondary me-2">@tag.Name</span>
-                            }
-                        </p>
-
-                        <p class="mb-5">
-                            @blogPost.ShortDescription
-                        </p>
-                        <a class="btn btn-dark"
-                        asp-area=""
-                        asp-controller="Blogs"
-                        asp-action="Index"
-                        asp-route-urlHandle="@blogPost.UrlHandle">
-                            Read More
-                        </a>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="@blogPost.FeaturedImageUrl" alt="@blogPost.Heading" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">@blogPost.Heading</h5>
+                            <p class="card-text">
+                                Author: @blogPost.Author<br />
+                                Publish Date: @blogPost.PublishedDate.ToShortDateString()
+                            </p>
+                            <p class="card-text">
+                                @foreach (var tag in blogPost.Tags)
+                                {
+                                    <span class="badge bg-secondary me-2">@tag.Name</span>
+                                }
+                            </p>
+                            <p class="card-text">@blogPost.ShortDescription</p>
+                        </div>
+                        <a class="btn btn-sm btn-dark position-absolute bottom-0 end-0 m-2 mt-5" asp-area="" asp-controller="Blogs" asp-action="Index" asp-route-urlHandle="@blogPost.UrlHandle">Read More</a>
                     </div>
-                }
+                </div>
             }
-        </div>
+        }
     </div>
 </div>
